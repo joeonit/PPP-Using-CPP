@@ -1,0 +1,76 @@
++----------------+     (1) creates many (M)     +-------------------+
+| User           | --------------------------> | Recipe            |
++----------------+     (hashed password)      +-------------------+
+| user_id (PK)   |                             | recipe_id (PK)     |
+| username       |                             | title              |
+| email          |                             | description        |
++----------------+                             +-------------------+
+                                               | cooking_time      |
+                                               | servings           |
+                                               | image_url          |
+                                               +-------------------+
+
++----------------+     (1) has many (M)     +-------------------+
+| Recipe          | --------------------------> | Ingredient        |
++----------------+                             +-------------------+
+| recipe_id (PK)   |                             | ingredient_id (PK) |
+| ...             |                             | name               |
++----------------+                             | unit (optional)   |
+                                               +-------------------+
+
++----------------+     (1) has many (M)     +-------------------+
+| Recipe          | --------------------------> | Step              |
++----------------+                             +-------------------+
+| recipe_id (PK)   |                             | step_id (PK)       |
+| ...             |                             | instruction        |
++----------------+                             | order              |
+                                               +-------------------+
+
++----------------+     (M) belongs to many (N) +-------------------+
+| Recipe          | --------------------------> | Category          | (Many-to-Many)
++----------------+                             +-------------------+
+| ...             |                             | category_id (PK)  |
++----------------+                             | name               |
+                                               +-------------------+
+
+**Associative Entity:**
+
++----------------+     (FK) belongs to (1)     +-------------------+
+| Recipe_Category | --------------------------> | Recipe            |
++----------------+                             +-------------------+
+| recipe_id (PK)   |                             | recipe_id (FK)     |
++----------------+                             +-------------------+
+
++----------------+     (FK) belongs to (1)     +-------------------+
+| Recipe_Category | --------------------------> | Category          |
++----------------+                             +-------------------+
+| category_id (PK) |                             | category_id (FK)  |
++----------------+                             +-------------------+
+
++----------------+     (1) writes many (M)     +-------------------+
+| User           | --------------------------> | Comment            |
++----------------+                             +-------------------+
+| user_id (PK)   |                             | comment_id (PK)    |
+| ...             |                             | content            |
++----------------+                             | created_at         |
+                                               +-------------------+
+
++----------------+     (1) can have many (M)     +-------------------+
+| Recipe          | --------------------------> | Comment            |
++----------------+                             +-------------------+
+| recipe_id (PK)   |                             | comment_id (FK)    |
+| ...             |                             | content            |
++----------------+                             | created_at         |
+                                               +-------------------+
+
+**Additional Attributes:**
+
+* Recipe: difficulty_level, rating
+* Comment: rating
+* User: profile_picture
+
+**Notes:**
+
+* PK: Primary Key
+* FK: Foreign Key
+* ...: Additional attributes not shown for brevity
